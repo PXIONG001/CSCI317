@@ -9,11 +9,12 @@ import java.util.*;
 public class AlgorithmPiE{
   
   public static void main(String [] args){
+    
     System.out.print( "Enter the number of games: " );
     Scanner myInput = new Scanner(System.in);
-    int number_of_games = myInput.nextInt();
+    double number_of_games = myInput.nextDouble();
     System.out.print( "Enter the number of darts: " );
-    int number_of_darts = myInput.nextInt();
+    double number_of_darts = myInput.nextDouble();
     
     System.out.println(EstimatePi(number_of_games, number_of_darts));
   }
@@ -26,7 +27,7 @@ public class AlgorithmPiE{
    * 
    * @return a String back to the user with the standard deviation and average (mean) value.
    */
-  public static String EstimatePi(int number_of_games, int number_of_darts){
+  public static String EstimatePi(double number_of_games, double number_of_darts){
     
     // ArrayList to store the pi numbers
     ArrayList<Double> piNum = new ArrayList<Double>();
@@ -40,8 +41,11 @@ public class AlgorithmPiE{
     // n_total
     double total_points = 0;
     
-    double rand_x = 0;
-    double rand_y = 0;
+    // random value for x
+    double rand_x = 0.0;
+    
+    // random value for y
+    double rand_y = 0.0;
     double min = -0.5;
     double max = 0.5;
     
@@ -66,18 +70,40 @@ public class AlgorithmPiE{
       }
       
       // pi = 4 * (n_inside/n_total)
-      // This adds the entire pi from each game
-      pie = pie + 4 * (inside_points/total_points);
+      pie = 4 * (inside_points/total_points);
+      
+      // Array list of all the estimation of pi
       piNum.add(pie);
     }
     
+    System.out.println(piNum);
+    
     // Finding the mean value for all the games 
-    double mean = pie/number_of_games;
+    double mean = calculateM(piNum);
     
     // Variable to calculate standard deviation
     double SD = calculateSD(piNum, mean);
+    return "\nAverage (Mean) Value: " + mean + "\nStandard Deviation: " + SD;
+  }
+  
+  /**
+   * Calculates the average (mean) value.
+   * 
+   * @param numArray the array list containing the estimation of pi for each game
+   * 
+   * @return the average (mean) value
+   */
+  public static double calculateM(ArrayList<Double> numArray){
     
-    return "Average (Mean) Value: " + mean + "\nStandard Deviation: " + SD;
+    double average = 0;
+    
+    int length = numArray.size();
+    
+    // Enhanced for loop to calculate the mean value
+    for(double num : numArray){
+      average += num;
+    }
+    return average/length;
   }
   
   /**
@@ -95,12 +121,12 @@ public class AlgorithmPiE{
     // The size of the array list
     int length = numArray.size();
     
-    // Enhanced loop to calculate each value of pi
+    // Enhanced loop to calculate the standard deviation
     for(double num : numArray){
-      
       standardDeviation += Math.pow(num - mean, 2);
     }
     
     return Math.sqrt(standardDeviation/length);
   }
+  
 }
