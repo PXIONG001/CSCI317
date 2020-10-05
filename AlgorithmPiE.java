@@ -76,7 +76,7 @@ public class AlgorithmPiE{
       piNum.add(pie);
     }
     
-    System.out.println(piNum);
+    //System.out.println(piNum);
     
     // Finding the mean value for all the games 
     double mean = calculateM(piNum);
